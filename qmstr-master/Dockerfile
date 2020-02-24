@@ -108,7 +108,10 @@ RUN set -e && \
   adduser --system qmstr --ingroup qmstr && \
   mkdir -p ${QMSTR_DIRS} && \
   chown -R qmstr /opt/${SCANCODE_RELEASE} && \
-  chown -R qmstr ${QMSTR_DIRS}
+  chown -R qmstr ${QMSTR_DIRS} && \
+  DUMMY=$(mktemp -d) && \
+  scancode -l -c --json $DUMMY/out.json $DUMMY && \
+  rm -rf $DUMMY
 
 WORKDIR /home/qmstr
 USER qmstr
